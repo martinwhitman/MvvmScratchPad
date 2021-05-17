@@ -1,4 +1,5 @@
 ﻿using MvvmTestApp.Models;
+using MvvmTestApp.Services;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -9,11 +10,17 @@ namespace MvvmTestApp.ViewModels
     [QueryProperty(nameof(ItemId), nameof(ItemId))]
     public class ItemDetailViewModel : BaseViewModel
     {
-        private string itemId;
+        private int itemId;
         private string text;
         private string description;
-        public string Id { get; set; }
+        private string photo;
+        public int Id { get; set; }
 
+        public string Photo
+        {
+            get => photo;
+            set => SetProperty(ref photo, value);
+        }
         public string Text
         {
             get => text;
@@ -26,7 +33,7 @@ namespace MvvmTestApp.ViewModels
             set => SetProperty(ref description, value);
         }
 
-        public string ItemId
+        public int ItemId
         {
             get
             {
@@ -39,17 +46,22 @@ namespace MvvmTestApp.ViewModels
             }
         }
 
-        public async void LoadItemId(string itemId)
+        public async void LoadItemId(int itemId)
         {
             try
             {
-                var item = await DataStore.GetItemAsync(itemId);
+                var localdb = await ItemDatabase.Instance;
+                var item = await localdb.GetItemAsync(itemId);
+                //var item = await DataStore.GetItemAsync(itemId);
+                Photo = item.Photo;
                 Id = item.Id;
                 Text = item.Text;
                 Description = item.Description;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.WriteLine("ex message = "+ex.Message);
+                Debug.WriteLine("ex trace = " + ex.StackTrace);
                 Debug.WriteLine("Failed to Load Item");
             }
         }

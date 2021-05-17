@@ -9,6 +9,8 @@
         <Label Text="{Binding Text}" FontSize="Small"/>
         <Label Text="Description:" FontSize="Medium" />
         <Label Text="{Binding Description}" FontSize="Small"/>
+        <Label Text="Image" FontSize="Medium" />
+        <Image Source="{Binding Photo}" HeightRequest="40"></Image>
     </StackLayout>
     
 </ContentPage>

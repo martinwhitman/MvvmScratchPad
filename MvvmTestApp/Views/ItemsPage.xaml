@@ -40,8 +40,15 @@
             </DataTemplate>
         </CollectionView.ItemTemplate>
         </CollectionView>
-        <CollectionView>
-            
+        <Label Text="Photos below here"></Label>
+        <CollectionView x:Name="PhotosListView" ItemsSource="{Binding Photos}" SelectionMode="None" ItemsLayout="HorizontalList">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10">
+                        <Image Source="{Binding Photo}"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>    
         </CollectionView>
     </StackLayout>
 </ContentPage>
